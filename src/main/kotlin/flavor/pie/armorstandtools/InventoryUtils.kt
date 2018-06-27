@@ -106,7 +106,7 @@ object InventoryUtils {
             add(Keys.DYE_COLOR, DyeColors.GRAY)
             add(Keys.DISPLAY_NAME, !"")
         }
-        for (i in arrayOf(0, 1, 3, 4, 8, 9, 13, /* SC#1959 15, */ 17, 18, 19, 21, 22, 26, 27, 28, 30, 31, 34, 35)) {
+        for (i in arrayOf(0, 1, 3, 4, /* */7,/* */ 8, 9, 13, 17, 18, 19, 21, 22, 26, 27, 28, 30, 31, 34, 35)) {
             inv[i] = empty.copy()
         }
         stand.helmet.unwrap()?.let { inv[2] = it.copy() }
@@ -136,11 +136,11 @@ object InventoryUtils {
                 listOf("You don't have permission for this.".red())
             })
         }
-        inv[7] = itemStackOf {
-            itemType(ItemTypes.GOLD_NUGGET)
-            add(Keys.DISPLAY_NAME, "Toggle Visibility".yellow())
-            add(Keys.ITEM_LORE, listOf("Visible: ".aqua() + if (stand[Keys.INVISIBLE].orElse(false)) "True".green() else "False".red()))
-        }
+//        inv[7] = itemStackOf {
+//            itemType(ItemTypes.GOLD_NUGGET)
+//            add(Keys.DISPLAY_NAME, "Toggle Visibility".yellow())
+//            add(Keys.ITEM_LORE, listOf("Visible: ".aqua() + if (stand[Keys.INVISIBLE].orElse(false)) "True".green() else "False".red()))
+//        }
         inv[14] = itemStackOf {
             itemType(ItemTypes.FEATHER)
             add(Keys.DISPLAY_NAME, "Pick Up (Move)".yellow())

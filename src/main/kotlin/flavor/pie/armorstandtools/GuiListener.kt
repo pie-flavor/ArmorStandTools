@@ -72,14 +72,15 @@ object GuiListener {
                             add(Keys.SKULL_TYPE, SkullTypes.PLAYER)
                             add(Keys.REPRESENTED_PLAYER, t)
                         }
-                        p.inventory += stack
+                        stand.setHelmet(stack)
+                        stand.updateAllInventories()
                     }
                 }
             }
-            7 -> {
-                stand[Keys.INVISIBLE] = !stand[Keys.INVISIBLE].orElse(false)
-                e.isCancelled = true
-            }
+//            7 -> {
+//                stand[Keys.INVISIBLE] = !stand[Keys.INVISIBLE].orElse(false)
+//                e.isCancelled = true
+//            }
             14 -> {
                 p.closeInventoryLater()
                 p[CarryingKeys.ORIGINAL_LOCATION] = stand.transform.optional()
