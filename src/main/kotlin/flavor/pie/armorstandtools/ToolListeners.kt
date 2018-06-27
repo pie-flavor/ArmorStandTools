@@ -153,9 +153,9 @@ object ToolListeners {
             ToolType.MOVE_Y -> stand.location = stand.location.add(0.0, if (p[Keys.IS_SNEAKING].get()) { -0.1 } else { 0.1 }, 0.0)
             ToolType.MOVE_Z -> stand.location = stand.location.add(0.0, 0.0, if (p[Keys.IS_SNEAKING].get()) { -0.1 } else { 0.1 })
             ToolType.ROTATION -> stand.rotation = stand.rotation.run { Vector3d(x, angle!!, z) }
-            ToolType.HEAD_X -> stand.headRotation = stand.headRotation.run { Vector3d(angle!!, y, z) }
-            ToolType.HEAD_Y -> stand.headRotation = stand.headRotation.run { Vector3d(x, angle!!, z) }
-            ToolType.HEAD_Z -> stand.headRotation = stand.headRotation.run { Vector3d(x, y, angle!!) }
+            ToolType.HEAD_X -> stand += stand.getValue(Keys.HEAD_ROTATION).get().let { it.set(it.get().run { Vector3d(angle!!, y, z) }) }
+            ToolType.HEAD_Y -> stand += stand.getValue(Keys.HEAD_ROTATION).get().let { it.set(it.get().run { Vector3d(x, angle!!, z) }) }
+            ToolType.HEAD_Z -> stand += stand.getValue(Keys.HEAD_ROTATION).get().let { it.set(it.get().run { Vector3d(x, y, angle!!) }) }
             ToolType.BODY_X -> stand += stand.bodyPartRotationalData.bodyRotation().let { it.set(it.get().run { Vector3d(angle!!, y, z) }) }
             ToolType.BODY_Y -> stand += stand.bodyPartRotationalData.bodyRotation().let { it.set(it.get().run { Vector3d(x, angle!!, z) }) }
             ToolType.BODY_Z -> stand += stand.bodyPartRotationalData.bodyRotation().let { it.set(it.get().run { Vector3d(x, y, angle!!) }) }
