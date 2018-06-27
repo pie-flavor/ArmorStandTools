@@ -10,15 +10,16 @@ import org.spongepowered.api.entity.living.player.Player
 object Commands {
 
     internal fun register(plugin: ArmorStandTools) {
-        val astools = commandSpecOf {
-            executor(::astools)
-            description(!"Give yourself the armor stand tools")
-            permission(Permissions.COMMAND)
-        }
         val reload = commandSpecOf {
             executor(::reload)
             description(!"Reload the config")
             permission(Permissions.RELOAD)
+        }
+        val astools = commandSpecOf {
+            executor(::astools)
+            description(!"Give yourself the armor stand tools")
+            permission(Permissions.COMMAND)
+            child(reload, "reload")
         }
         CommandManager.register(plugin, astools, "astools", "ast")
     }
