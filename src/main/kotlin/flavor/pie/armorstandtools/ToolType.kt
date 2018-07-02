@@ -13,3 +13,7 @@ enum class ToolType {
                 BODY_X, BODY_Y, BODY_Z, HEAD_X, HEAD_Y, HEAD_Z)
     }
 }
+
+fun ToolType?.isNone(): Boolean {
+    return this == null || this == ToolType.NONE
+}

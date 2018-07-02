@@ -66,6 +66,7 @@ class ArmorStandTools @Inject constructor(private val plugin: PluginContainer,
         e.register(SavedInventoryKeys.HOTBAR)
         e.register(SavedInventoryKeys.INVENTORY)
         e.register(ToolKeys.TOOL_TYPE)
+        e.register(StoredCommandKeys.COMMANDS)
     }
 
     @Listener
@@ -85,9 +86,15 @@ class ArmorStandTools @Inject constructor(private val plugin: PluginContainer,
             manipulatorId("tool_data")
             builder(ToolData.Builder())
         }
+        dataRegistrationOf<StoredCommandData, StoredCommandData.Immutable>(plugin) {
+            dataName("Stored Command Data")
+            manipulatorId("stored_command_data")
+            builder(StoredCommandData.Builder())
+        }
         Commands.register(this)
         EventManager.registerListeners(this, ToolListeners)
         EventManager.registerListeners(this, GuiListener)
+        EventManager.registerListeners(this, InteractionListener)
         loadConfig()
     }
 

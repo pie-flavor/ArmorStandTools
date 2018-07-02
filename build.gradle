@@ -36,7 +36,7 @@ repositories {
 dependencies {
     shadow "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     kapt 'org.spongepowered:spongeapi:7.0.0'
-    shadow 'com.github.pie-flavor:kludge:3d2dba0'
+    shadow 'com.github.pie-flavor:kludge:1918cb5'
     shadow 'org.bstats:bstats-sponge-lite:1.2'
 }
 

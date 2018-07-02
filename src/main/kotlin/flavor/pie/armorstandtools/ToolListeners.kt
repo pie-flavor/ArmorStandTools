@@ -32,8 +32,8 @@ object ToolListeners {
                 return@onUseSummoner
             }
         }
-        val toolType = e.itemStack[ToolKeys.TOOL_TYPE].unwrap() ?: ToolType.NONE
-        if (!p.hasPermission(Permissions.USE) && toolType != ToolType.NONE) {
+        val toolType = e.itemStack[ToolKeys.TOOL_TYPE].unwrap()
+        if (!p.hasPermission(Permissions.USE) && !toolType.isNone()) {
             p.sendMessage(ChatTypes.ACTION_BAR, "You don't have permission to use tools.".red())
             e.isCancelled = true
             return
@@ -75,13 +75,13 @@ object ToolListeners {
         if (p[CarryingKeys.CARRYING].get().isPresent) {
             return
         }
-        val tool = p.getItemInHand(e.handType).unwrap()?.get(ToolKeys.TOOL_TYPE).unwrap() ?: ToolType.NONE
-        if (!p.hasPermission(Permissions.USE) && tool != ToolType.NONE) {
+        val tool = p.getItemInHand(e.handType).unwrap()?.get(ToolKeys.TOOL_TYPE).unwrap()
+        if (!p.hasPermission(Permissions.USE) && !tool.isNone()) {
             p.sendMessage(ChatTypes.ACTION_BAR, "You don't have permission to use this tool.".red())
             e.isCancelled = true
             return
         }
-        if (tool != ToolType.NONE && tool != ToolType.SUMMON) {
+        if (!tool.isNone() && tool != ToolType.SUMMON) {
             e.isCancelled = true
         }
     }
@@ -121,8 +121,11 @@ object ToolListeners {
     @Listener
     fun modifyEntity(e: InteractEntityEvent.Secondary, @First p: Player) {
         val item = p.getItemInHand(e.handType).unwrap() ?: return
-        val tool = item[ToolKeys.TOOL_TYPE].unwrap() ?: ToolType.NONE
-        if (tool != ToolType.NONE) e.isCancelled = true
+        val tool = item[ToolKeys.TOOL_TYPE].unwrap()
+        if (tool.isNone()) {
+            return
+        }
+        e.isCancelled = true
         val stand = e.targetEntity as? ArmorStand ?: return
         val angle = e.interactionPoint.unwrap()?.y?.let {
             var x = it - stand.location.y
@@ -139,13 +142,13 @@ object ToolListeners {
         if (angle == null && tool in ToolType.REQUIRES_ANGLE) {
             return
         }
-        if (!p.hasPermission(Permissions.USE) && tool != ToolType.NONE) {
+        if (!p.hasPermission(Permissions.USE)) {
             p.sendMessage(ChatTypes.ACTION_BAR, "You don't have permission to use this tool.".red())
             e.isCancelled = true
             return
         }
         when (tool) {
-            ToolType.NONE, ToolType.SUMMON -> return
+            ToolType.SUMMON -> return
             ToolType.GUI -> {
                 p.openInventory(InventoryUtils.makeInv(stand, p))
             }
@@ -171,12 +174,13 @@ object ToolListeners {
             ToolType.RIGHT_ARM_X -> stand += stand.getValue(Keys.RIGHT_ARM_ROTATION).get().let { it.set(it.get().run { Vector3d(angle!!, y, z) }) }
             ToolType.RIGHT_ARM_Y -> stand += stand.getValue(Keys.RIGHT_ARM_ROTATION).get().let { it.set(it.get().run { Vector3d(x, angle!!, z) }) }
             ToolType.RIGHT_ARM_Z -> stand += stand.getValue(Keys.RIGHT_ARM_ROTATION).get().let { it.set(it.get().run { Vector3d(x, y, angle!!) }) }
+            else -> {}
         }
     }
 
     @Listener
     fun leftClick(e: InteractItemEvent.Primary, @First p: Player) {
-        if (p[SavedInventoryKeys.HAS_TOOLS].orElse(false) && (p.getItemInHand(HandTypes.MAIN_HAND).unwrap()?.get(ToolKeys.TOOL_TYPE).unwrap() ?: ToolType.NONE) != ToolType.NONE) {
+        if (p[SavedInventoryKeys.HAS_TOOLS].orElse(false) && !p.getItemInHand(HandTypes.MAIN_HAND).unwrap()?.get(ToolKeys.TOOL_TYPE).unwrap().isNone()) {
             for (i in 0 until 9) {
                 val temp = p.storageInventory.grid(18 + i)
                 p.storageInventory.grid(9 + i)?.let { p.storageInventory.grid[18 + i] = it.copy() } ?: p.storageInventory.grid[18 + i]?.clear()
