@@ -154,6 +154,7 @@ object Commands {
             } else {
                 data.commands = emptyList()
             }
+            stand += data
         }
     }
 
