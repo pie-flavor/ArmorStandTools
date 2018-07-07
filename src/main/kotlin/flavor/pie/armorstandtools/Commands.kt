@@ -110,7 +110,7 @@ object Commands {
     private fun assignCommand(stand: ArmorStand, command: String) {
         val data = stand.getOrCreate(StoredCommandData::class.java).get()
         val list = Lists.newArrayList(data.commands)
-        list += "*$command"
+        list += command
         data.commands = list
         stand += data
     }
