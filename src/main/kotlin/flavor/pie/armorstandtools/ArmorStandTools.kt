@@ -19,14 +19,13 @@ import org.spongepowered.api.event.game.state.GamePreInitializationEvent
 import org.spongepowered.api.event.message.MessageChannelEvent
 import org.spongepowered.api.event.network.ClientConnectionEvent
 import org.spongepowered.api.item.inventory.ItemStackSnapshot
-import org.spongepowered.api.plugin.Dependency
 import org.spongepowered.api.plugin.Plugin
 import org.spongepowered.api.plugin.PluginContainer
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.UUID
 
-@Plugin(id = "armorstandtools", name = "ArmorStandTools", version = "1.0.1-SNAPSHOT", authors = ["pie_flavor"],
+@Plugin(id = "armorstandtools", name = "ArmorStandTools", version = "1.1.0-SNAPSHOT", authors = ["pie_flavor"],
         description = "Tools for manipulating armor stands.")
 class ArmorStandTools @Inject constructor(private val plugin: PluginContainer,
                                           @DefaultConfig(sharedRoot = true) private val path: Path,
