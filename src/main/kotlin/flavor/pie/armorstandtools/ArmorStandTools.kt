@@ -25,7 +25,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.util.UUID
 
-@Plugin(id = "armorstandtools", name = "ArmorStandTools", version = "1.1.1-SNAPSHOT", authors = ["pie_flavor"],
+@Plugin(id = "armorstandtools", name = "ArmorStandTools", version = "1.1.2-SNAPSHOT", authors = ["pie_flavor"],
         description = "Tools for manipulating armor stands.")
 class ArmorStandTools @Inject constructor(private val plugin: PluginContainer,
                                           @DefaultConfig(sharedRoot = true) private val path: Path,
