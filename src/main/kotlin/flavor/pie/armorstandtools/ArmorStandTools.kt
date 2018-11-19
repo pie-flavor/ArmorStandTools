@@ -5,7 +5,7 @@ import com.google.inject.Inject
 import flavor.pie.kludge.*
 import ninja.leaping.configurate.commented.CommentedConfigurationNode
 import ninja.leaping.configurate.loader.ConfigurationLoader
-import org.bstats.sponge.MetricsLite
+import org.bstats.sponge.MetricsLite2
 import org.spongepowered.api.config.DefaultConfig
 import org.spongepowered.api.data.key.Key
 import org.spongepowered.api.entity.living.player.Player
@@ -30,7 +30,7 @@ import java.util.UUID
 class ArmorStandTools @Inject constructor(private val plugin: PluginContainer,
                                           @DefaultConfig(sharedRoot = true) private val path: Path,
                                           @DefaultConfig(sharedRoot = true) private val loader: ConfigurationLoader<CommentedConfigurationNode>,
-                                          private val metrics: MetricsLite) {
+                                          private val metrics: MetricsLite2) {
 
     companion object {
         lateinit var instance: ArmorStandTools
@@ -102,7 +102,7 @@ class ArmorStandTools @Inject constructor(private val plugin: PluginContainer,
             AssetManager.getAsset(this, "default.conf").get().copyToFile(path)
         }
         val opts = loader.defaultOptions.let { it.setSerializers(it.serializers.newChild().registerType(TypeToken.of(ItemStackSnapshot::class.java), ItemStackSnapshotSerializer)) }
-        config = loader.load(opts).getValue(Config.type)
+        config = loader.load(opts).getValue(Config.type)!!
     }
 
     fun whenPlayerNextSpeaks(p: Player, fn: (String) -> Unit) {
